@@ -4,26 +4,79 @@
 <head>
     <meta charset="utf-8" />
     <title>Arithmetic</title>
+    <style>
+        .column {
+           float: left;
+           width: 50%;
+           padding: 10px;
+           box-sizing: border-box;
+          
+        }
+        .row::after {
+           content: "";
+           clear: both;
+           display: table;
+        }
+     </style>
 </head>
 <body>
-    <section>
-    <h2>Arithmetic</h2>
-    <input id="one"/>
-    <label> +</label>
-    <input id="two"/>
-    <button onclick="add()">=</button>
-    <label id = "sum"></label>
-    </section>
+    <div class="row">
+        <div class="column">          
+           <section>
+            <h2>Arithmetic</h2>
+            <input id="operand1"/> 
+            <label>+</label>
+            <input id="operand2"/>
+            <button onclick="add()">=</button>
+            <label id="sum"></label>  
+        </section>
+        </div>
+        <div class="column">
+            <section>
+                <h2>Prime check</h2>                
+                <label>Number to test:</label>
+                <input id="numberToTest"/>
+                <button onclick="isPrime()">Check</button>
+                <label id="primeCheckResult"></label>  
+            </section>           
+        </div>
+        <div class="column">
+            <section>
+                <h2>Ceasar Cipher</h2>                
+                <label>Text:</label>
+                <input id="text"/>
+                <button onclick="ceasarCipher()">Cipher</button>
+                <label id="cipherResult"></label>  
+            </section>           
+        </div> 
+     </div>
 
     <script>
         async function add(){
-            const one = document.getElementById("one");
-            const two = document.getElementById("two");
+            const one = document.getElementById("operand1");
+            const two = document.getElementById("operand2");
             let n = one.value;
             let m = two.value;
             const response = await fetch("http://localhost:3000/add/"+n+"/"+m);
             const sum = await response.json();
             document.getElementById("sum").innerText = sum;
+        }
+    </script>
+
+    <script>
+        async function primeCheck(){
+            const num = document.getElementById("numberToTest");
+            let numVal = num.value;
+            const response = await fetch("https://primes-service-latest-adtm.onrender.com/primes/"+numVal);
+            const isPrimeVal = await response.json();
+            document.getElementById("primeCheckResult").innerText = isPrimeVal;
+        }
+
+        async function ceasarCipher(){
+            const text = document.getElementById("text");
+            const response = await fetch("???"+text);
+            const result = await response.json();
+            document.getElementById("cipherResult").innerText = result;
         }
     </script>
 </body>
